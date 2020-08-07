@@ -69,15 +69,15 @@ def main(auth_string, report_location, scan_only = False, force_rewrite = False)
     report_id = item['WID']
     print("Report ID: " + report_id, end = '')
 
-    is_report_filled = 'TJSJ' in item and 'TJSJ' != '';
+    is_report_filled = ('TJSJ' in item and item['TJSJ'] != '');
     if scan_only:
       if is_report_filled:
-        print("  ...filled")
+        print("  ...filled(" + item['TJSJ'] + ")")
       else:
         print("  ...not filled")
       continue
     if force_rewrite == False and is_report_filled:
-      print("  ...skipped")
+      print("  ...skipped(" + item['TJSJ'] + ")")
       continue
     payload = {
       'WID': report_id,
