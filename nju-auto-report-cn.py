@@ -24,7 +24,7 @@ def getAuthString():
   input("按Enter键继续...")
   print("登录你的账号（如果需要的话），然后在开发者工具（按F12 或 Option-Command-I 打开）中转至“Application”一栏")
   print("展开侧边栏中的“Cookies”，然后选中网站。")
-  print("复制以MOD_AMP开头的值（Value）然后粘贴到这里：")
+  print("复制MOD_AMP_AUTH的对应值（以MOD_AMP开头），然后粘贴到这里：")
 
 import sys, getopt
 

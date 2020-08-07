@@ -24,7 +24,7 @@ def getAuthString():
   input("Press Enter to continue...")
   print("Log into your account if required, then check the \"Application\" panel in developer tools (F12 or Option-Command-I)")
   print("Expand \"Cookies\" in the sidebar, then select the website.")
-  print("Copy the value starting with MOD_AMP and paste here:")
+  print("Copy the value of MOD_AMP_AUTH (starting with MOD_AMP) and paste here:")
 
 import sys, getopt
 
