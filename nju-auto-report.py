@@ -35,7 +35,7 @@ def main(auth_string, report_location, scan_only = False, force_rewrite = False)
     while auth_string == None or auth_string == "":
       getAuthString()
       auth_string = input()
-  if report_location == None:
+  if report_location == None and scan_only == False:
     print("Please input the location below (optional):")
     report_location = input()
 
