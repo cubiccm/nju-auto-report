@@ -28,6 +28,16 @@ def getAuthString():
 
 import sys, getopt
 
+def showSubmitResult(r, f):
+  if f:
+    print("  ...rewrite ", end = '')
+  else:
+    print("  ...", end = '')
+  if r:
+    print("success")
+  else:
+    print("failed")
+
 def main(auth_string, report_location, scan_only = False, force_rewrite = False):
   if auth_string == None or auth_string == "":
     print("If you have the authentication string (start with MOD_AMP), please input below; to get the authentication string, just press Enter.")
@@ -90,15 +100,17 @@ def main(auth_string, report_location, scan_only = False, force_rewrite = False)
     try:
       submit_request = requests.get(submit_url, cookies = login_cookies, params = payload)
     except:
-      if force_rewrite:
-        print("  ...rewrite failed")
-      else:
-        print("  ...failed")
+      showSubmitResult(False, force_rewrite)
     else:
-      if force_rewrite:
-        print("  ...rewrite success")
+      try:
+        submit_info = json.loads(submit_request.text)
+      except:
+        showSubmitResult(False, force_rewrite)
       else:
-        print("  ...success")
+        if "msg" in submit_info and submit_info["msg"] == "成功":
+          showSubmitResult(True, force_rewrite)
+        else:
+          showSubmitResult(False, force_rewrite)
 
 if __name__ == "__main__":
   scan_only = False

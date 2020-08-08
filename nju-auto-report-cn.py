@@ -28,6 +28,16 @@ def getAuthString():
 
 import sys, getopt
 
+def showSubmitResult(r, f):
+  if f:
+    print("  ...重新打卡", end = '')
+  else:
+    print("  ...", end = '')
+  if r:
+    print("成功")
+  else:
+    print("失败")
+
 def main(auth_string, report_location, scan_only = False, force_rewrite = False):
   if auth_string == None or auth_string == "":
     print("如果你有以MOD_AMP开头的登录认证串，请在下方输入；如没有，请直接按Enter。")
@@ -90,15 +100,17 @@ def main(auth_string, report_location, scan_only = False, force_rewrite = False)
     try:
       submit_request = requests.get(submit_url, cookies = login_cookies, params = payload)
     except:
-      if force_rewrite:
-        print("  ...重新打卡失败")
-      else:
-        print("  ...失败")
+      showSubmitResult(False, force_rewrite)
     else:
-      if force_rewrite:
-        print("  ...重新打卡成功")
+      try:
+        submit_info = json.loads(submit_request.text)
+      except:
+        showSubmitResult(False, force_rewrite)
       else:
-        print("  ...成功")
+        if "msg" in submit_info and submit_info["msg"] == "成功":
+          showSubmitResult(True, force_rewrite)
+        else:
+          showSubmitResult(False, force_rewrite)
 
 if __name__ == "__main__":
   scan_only = False
