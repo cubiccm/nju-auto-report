@@ -28,15 +28,19 @@ def getAuthString():
 
 import sys, getopt
 
-def showSubmitResult(r, f):
+def showSubmitResult(r, f, t):
   if f:
-    print("  ...重新打卡", end = '')
-  else:
-    print("  ...", end = '')
+    if r:
+      printStatus("重新打卡成功", t)
+    else:
+      printStatus("重新打卡失败", t)
   if r:
-    print("成功")
+    printStatus("成功", t)
   else:
-    print("失败")
+    printStatus("失败", t)
+
+def printStatus(r, t):
+  print(" ...%s (%s)" % (r, t))
 
 def main(auth_string, report_location, scan_only = False, force_rewrite = False):
   if auth_string == None or auth_string == "":
@@ -81,19 +85,19 @@ def main(auth_string, report_location, scan_only = False, force_rewrite = False)
 
     is_report_filled = ('TJSJ' in item and item['TJSJ'] != '');
     time_detail = ""
-    if is_report_filled:
-      time_detail = '上次填写：' + item['TJSJ']
     if 'TBRQ' in item:
-      time_detail = '日期：' + item['TBRQ'] + ' ' + time_detail
+      time_detail = '日期：' + item['TBRQ']
+    if is_report_filled:
+      time_detail = time_detail + ' 上次填写：' + item['TJSJ']
 
     if scan_only:
       if is_report_filled:
-        print("  ...已填写（" + time_detail + "）")
+        printStatus("已填写", time_detail)
       else:
-        print("  ...未填写")
+        printStatus("未填写", time_detail)
       continue
     if force_rewrite == False and is_report_filled:
-      print("  ...跳过（" + time_detail + "）")
+      printStatus("跳过", time_detail)
       continue
     payload = {
       'WID': report_id,
@@ -106,17 +110,17 @@ def main(auth_string, report_location, scan_only = False, force_rewrite = False)
     try:
       submit_request = requests.get(submit_url, cookies = login_cookies, params = payload)
     except:
-      showSubmitResult(False, force_rewrite)
+      showSubmitResult(False, force_rewrite and is_report_filled, time_detail)
     else:
       try:
         submit_info = json.loads(submit_request.text)
       except:
-        showSubmitResult(False, force_rewrite)
+        showSubmitResult(False, force_rewrite and is_report_filled, time_detail)
       else:
         if "msg" in submit_info and submit_info["msg"] == "成功":
-          showSubmitResult(True, force_rewrite)
+          showSubmitResult(True, force_rewrite and is_report_filled, time_detail)
         else:
-          showSubmitResult(False, force_rewrite)
+          showSubmitResult(False, force_rewrite and is_report_filled, time_detail)
 
 if __name__ == "__main__":
   scan_only = False
