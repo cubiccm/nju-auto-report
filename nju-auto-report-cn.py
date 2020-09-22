@@ -19,7 +19,7 @@ def showHelp():
   print("  -h  --help  显示帮助")
 
 def getAuthString():
-  print("请在浏览器中打开一下链接：")
+  print("请在浏览器中打开以下链接：")
   print("http://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/getApplyInfoList.do")
   input("按Enter键继续...")
   print("登录你的账号（如果需要的话），然后在开发者工具（按F12 或 Option-Command-I 打开）中转至“Application”一栏")

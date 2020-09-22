@@ -21,4 +21,4 @@ python3 nju-auto-report-cn.py [-l location] [-a auth-string] [-s] [-f] [-h]
   -h  --help  显示帮助
 ```
 
-需要获取“登录认证串”，可通过访问 http://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/getApplyInfoList.do 获取MOD_AUTH_CAS对应的Cookie值（按F12或Command+Shift+I进入开发者工具，点击Application，查看对应的值）。
+需要获取“登录认证串”，可通过访问 http://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/getApplyInfoList.do 获取MOD_AUTH_CAS对应的Cookie值（按 F12 或 Option-Command-I 进入开发者工具，点击Application一栏，查看对应的值）。
