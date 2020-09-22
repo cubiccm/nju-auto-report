@@ -1,7 +1,7 @@
 # Customize your default settings below
 # Example:
 '''
-auth_string = "MOD_AMP_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+auth_string = "MOD_AUTH_ST-xxxxxxxxxxx-cas"
 report_location = "中华人民共和国"
 '''
 auth_string = None
@@ -24,7 +24,7 @@ def getAuthString():
   input("Press Enter to continue...")
   print("Log into your account if required, then check the \"Application\" panel in developer tools (F12 or Option-Command-I)")
   print("Expand \"Cookies\" in the sidebar, then select the website.")
-  print("Copy the value of MOD_AMP_AUTH (starting with MOD_AMP) and paste here:")
+  print("Copy the value of MOD_AUTH_CAS (starting with MOD_AUTH_ST) and paste here:")
 
 import sys, getopt
 
@@ -44,7 +44,7 @@ def printStatus(r, t):
 
 def main(auth_string, report_location, scan_only = False, force_rewrite = False):
   if auth_string == None or auth_string == "":
-    print("If you have the authentication string (start with MOD_AMP), please input below; to get the authentication string, just press Enter.")
+    print("If you have the authentication string (start with MOD_AUTH_ST), please input below; to get the authentication string, just press Enter.")
     auth_string = input()
     while auth_string == None or auth_string == "":
       getAuthString()
@@ -59,7 +59,7 @@ def main(auth_string, report_location, scan_only = False, force_rewrite = False)
   submit_url = "http://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/saveApplyInfos.do"
 
   # Send query request
-  login_cookies = dict(MOD_AMP_AUTH = auth_string)
+  login_cookies = dict(MOD_AUTH_CAS = auth_string)
   try:
     query_request = requests.get(query_url, cookies = login_cookies)
   except:

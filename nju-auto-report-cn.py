@@ -1,7 +1,7 @@
 # 您可以在下方自定义默认设置
 # 样例：
 '''
-auth_string = "MOD_AMP_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+auth_string = "MOD_AUTH_ST-xxxxxxxxxxx-cas"
 report_location = "中华人民共和国"
 '''
 auth_string = None
@@ -24,7 +24,7 @@ def getAuthString():
   input("按Enter键继续...")
   print("登录你的账号（如果需要的话），然后在开发者工具（按F12 或 Option-Command-I 打开）中转至“Application”一栏")
   print("展开侧边栏中的“Cookies”，然后选中网站。")
-  print("复制MOD_AMP_AUTH的对应值（以MOD_AMP开头），然后粘贴到这里：")
+  print("复制MOD_AUTH_CAS的对应值（以MOD_AUTH_ST开头），然后粘贴到这里：")
 
 import sys, getopt
 
@@ -44,7 +44,7 @@ def printStatus(r, t):
 
 def main(auth_string, report_location, scan_only = False, force_rewrite = False):
   if auth_string == None or auth_string == "":
-    print("如果你有以MOD_AMP开头的登录认证串，请在下方输入；如没有，请直接按Enter。")
+    print("如果你有以MOD_AUTH_ST开头的登录认证串，请在下方输入；如没有，请直接按Enter。")
     auth_string = input()
     while auth_string == None or auth_string == "":
       getAuthString()
@@ -59,7 +59,7 @@ def main(auth_string, report_location, scan_only = False, force_rewrite = False)
   submit_url = "http://ehallapp.nju.edu.cn/xgfw/sys/yqfxmrjkdkappnju/apply/saveApplyInfos.do"
 
   # Send query request
-  login_cookies = dict(MOD_AMP_AUTH = auth_string)
+  login_cookies = dict(MOD_AUTH_CAS = auth_string)
   try:
     query_request = requests.get(query_url, cookies = login_cookies)
   except:
